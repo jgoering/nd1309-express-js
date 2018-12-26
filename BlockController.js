@@ -23,6 +23,7 @@ class BlockController {
      */
     getBlockByIndex() {
         this.app.get("/api/block/:index", (req, res) => {
+            res.send(JSON.stringify(this.blocks[req.params["index"]]).toString());
             // Add your code here
         });
     }
@@ -31,8 +32,12 @@ class BlockController {
      * Implement a POST Endpoint to add a new Block, url: "/api/block"
      */
     postNewBlock() {
+        let self = this;
         this.app.post("/api/block", (req, res) => {
-            // Add your code here
+            self.blocks.push(req.body);
+            res.setHeader('Content-Type', 'text/plain')
+            res.write('you posted:\n')
+            res.end(JSON.stringify(req.body, null, 2))
         });
     }
 
